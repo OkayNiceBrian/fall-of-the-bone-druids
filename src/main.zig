@@ -1,11 +1,14 @@
 const std = @import("std");
 const Io = std.Io;
 
+const rl = @import("raylib");
+
 const fall_of_the_bone_druids = @import("fall_of_the_bone_druids");
+const game_title = "Bone Theory: The Fall of the Bone Druids";
 
 pub fn main(init: std.process.Init) !void {
     // Prints to stderr, unbuffered, ignoring potential errors.
-    std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
+    std.debug.print("Starting... {s}.\n", .{game_title});
 
     // This is appropriate for anything that lives as long as the process.
     const arena: std.mem.Allocator = init.arena.allocator();
@@ -16,19 +19,8 @@ pub fn main(init: std.process.Init) !void {
         std.log.info("arg: {s}", .{arg});
     }
 
-    // In order to do I/O operations need an `Io` instance.
-    const io = init.io;
-
-    // Stdout is for the actual output of your application, for example if you
-    // are implementing gzip, then only the compressed bytes should be sent to
-    // stdout, not any debugging messages.
-    var stdout_buffer: [1024]u8 = undefined;
-    var stdout_file_writer: Io.File.Writer = .init(.stdout(), io, &stdout_buffer);
-    const stdout_writer = &stdout_file_writer.interface;
-
-    try fall_of_the_bone_druids.printAnotherMessage(stdout_writer);
-
-    try stdout_writer.flush(); // Don't forget to flush!
+    // Create Window
+    rl.initWindow(1920, 1080, game_title);
 }
 
 test "simple test" {
