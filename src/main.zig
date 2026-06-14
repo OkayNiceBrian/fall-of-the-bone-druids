@@ -26,9 +26,14 @@ pub fn main(init: std.process.Init) !void {
 
     rl.setTargetFPS(gameConfig.fps);
 
-    const bgImg = try rl.loadTexture("assets/bg.jpg");
-    defer rl.unloadTexture(bgImg);
+    // set up background, testing
+    var bgImg = try rl.loadImage("assets/bg.png");
+    defer rl.unloadImage(bgImg);
+    bgImg.resize(gameConfig.screenSize.w, gameConfig.screenSize.h);
+    const bgTexture = try rl.loadTextureFromImage(bgImg);
+    defer rl.unloadTexture(bgTexture);
 
+    // LOOP
     while (!rl.windowShouldClose()) {
         rl.beginDrawing();
         defer rl.endDrawing();
@@ -40,6 +45,6 @@ pub fn main(init: std.process.Init) !void {
         //UPDATE
 
         //DRAW
-        rl.drawTexture(bgImg, 0, 0, rl.Color.white);
+        rl.drawTexture(bgTexture, 0, 0, rl.Color.white);
     }
 }
