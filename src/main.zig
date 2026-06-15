@@ -5,6 +5,7 @@ const rl = @import("raylib");
 
 const bt = @import("fall_of_the_bone_druids");
 const GameConfig = bt.GameConfig;
+const InputHandler = bt.Input.InputHandler;
 
 pub fn main(init: std.process.Init) !void {
     const gameConfig = GameConfig{};
@@ -42,12 +43,16 @@ pub fn main(init: std.process.Init) !void {
     const playerTexture = try rl.loadTexture("assets/player/bonedruid.png");
     defer rl.unloadTexture(playerTexture);
 
+    // SETUP top-level objects
+    const ih = InputHandler{};
+
     // LOOP
     while (!rl.windowShouldClose()) {
         
 
         //INPUT
-
+        ih.handleInput();
+        
         //UPDATE
 
         //DRAW
