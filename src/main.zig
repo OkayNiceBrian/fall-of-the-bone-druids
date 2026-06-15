@@ -6,6 +6,8 @@ const rl = @import("raylib");
 const bt = @import("fall_of_the_bone_druids");
 const GameConfig = bt.GameConfig;
 const InputHandler = bt.Input.InputHandler;
+const Timer = bt.Time.Timer;
+const Game = bt.Game.Game;
 
 pub fn main(init: std.process.Init) !void {
     const gameConfig = GameConfig{};
@@ -44,27 +46,35 @@ pub fn main(init: std.process.Init) !void {
     defer rl.unloadTexture(playerTexture);
 
     // SETUP top-level objects
+    const timer = Timer{};
     const ih = InputHandler{};
+    const game = Game{.inputHandler = &ih, .timer = &timer};
 
     // LOOP
     while (!rl.windowShouldClose()) {
         
-
         //INPUT
         ih.handleInput();
-        
+
         //UPDATE
+        game.update();
 
         //DRAW
+        // draw onto virtual screen to be uprendered
         rl.beginTextureMode(renderTexture);
         rl.clearBackground(rl.Color.black);
-        rl.drawTexture(bgTexture, 0, 0, rl.Color.white);
-        rl.drawTexture(playerTexture, 250, 250, rl.Color.white);
+        game.draw();
+        rl.drawTexture(bgTexture, 0, 0, rl.Color.white); //toremove
+        rl.drawTexture(playerTexture, 250, 250, rl.Color.white); //toremove
         rl.endTextureMode();
 
+        // draw onto upscaled screen
         rl.beginDrawing();
         rl.clearBackground(rl.Color.black);
         rl.drawTexturePro(renderTexture.texture, renderTextureSrc, renderTextureDest, renderTextureOrig, 0, rl.Color.white);
         rl.endDrawing();
+
+        // TIMER INCREMENT
+        timer.increment();
     }
 }

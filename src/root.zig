@@ -7,6 +7,7 @@ pub const Vector2D = @import("geometry.zig").Vector2D;
 pub const Game = @import("game.zig");
 pub const Player = @import("player/player.zig");
 pub const Input = @import("input.zig");
+pub const Time = @import("time.zig");
 
 /// This is a documentation comment to explain the `printAnotherMessage` function below.
 ///
