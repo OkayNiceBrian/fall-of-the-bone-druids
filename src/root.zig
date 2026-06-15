@@ -2,6 +2,10 @@
 const std = @import("std");
 const Io = std.Io;
 pub const GameConfig = @import("config.zig").GameConfig;
+pub const Rectangle = @import("geometry.zig").Rectangle;
+pub const Vector2D = @import("geometry.zig").Vector2D;
+pub const Game = @import("game.zig");
+pub const Player = @import("player/player.zig");
 
 /// This is a documentation comment to explain the `printAnotherMessage` function below.
 ///

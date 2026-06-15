@@ -2,7 +2,7 @@
 /// Fields:
 /// - width: u32
 /// - height: u32
-pub const Size2D = struct { w: u32, h: u32 };
+pub const Size2D = struct { w: u32, h: i32 };
 
 /// 2D Vector
 /// Fields:
@@ -18,14 +18,16 @@ pub const Rectangle = struct {
     position: Vector2D,
     size: Size2D,
     
-    pub fn init(self: Rectangle, position: Vector2D, size: Size2D) void {
-        self.position = position;
-        self.size = size;
+    pub fn init(position: Vector2D, size: Size2D) Rectangle {
+        const self: Rectangle = Rectangle{.position = position, .size = size};
+        return self;
     }
 
-    pub fn initPrimitives(self: Rectangle, x: i32, y: i32, w: u32, h:32) void {
-        self.position = Vector2D{.x = x, .y = y};
-        self.size = Size2D{.w = w, .h = h};
+    pub fn initPrimitives(x: i32, y: i32, w: u32, h: u32) Rectangle {
+        const position = Vector2D{.x = x, .y = y};
+        const size = Size2D{.w = w, .h = h};
+        const self: Rectangle = Rectangle{.position = position, .size = size};
+        return self;
     }
 
     pub fn X(self: Rectangle) i32 {
