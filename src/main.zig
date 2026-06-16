@@ -35,20 +35,20 @@ pub fn main(init: std.process.Init) !void {
     const bgTexture = try rl.loadTexture("assets/bg.png");
     defer rl.unloadTexture(bgTexture);
 
+    // SETUP the virtual rendering situation
     const renderTexture: rl.RenderTexture2D = try rl.loadRenderTexture(gameConfig.v_screenSize.w, gameConfig.v_screenSize.h);
     const renderTextureSrc: rl.Rectangle = rl.Rectangle{.x = 0, .y = 0, .width = gameConfig.v_screenSize.w, .height = -gameConfig.v_screenSize.h};
     const renderTextureDest: rl.Rectangle = rl.Rectangle{.x = 0, .y = 0, .width = screenWidth, .height = screenHeight};
     const renderTextureOrig: rl.Vector2 = rl.Vector2{.x = 0, .y = 0};
     defer rl.unloadRenderTexture(renderTexture);
 
-    //set up player, testing
-    const playerTexture = try rl.loadTexture("assets/player/bonedruid.png");
-    defer rl.unloadTexture(playerTexture);
-
     // SETUP top-level objects
-    const globalTimer = Timer{};
-    const ih = InputHandler{};
-    const game = Game{.inputHandler = &ih};
+    var globalTimer = Timer{};
+    var ih = InputHandler{};
+    var game = Game{.inputHandler = &ih};
+    
+    try game.load();
+    defer game.unload();
 
     // LOOP
     while (!rl.windowShouldClose()) {
@@ -63,9 +63,8 @@ pub fn main(init: std.process.Init) !void {
         // draw onto virtual screen to be uprendered
         rl.beginTextureMode(renderTexture);
         rl.clearBackground(rl.Color.black);
-        game.draw();
         rl.drawTexture(bgTexture, 0, 0, rl.Color.white); //toremove
-        rl.drawTexture(playerTexture, 250, 250, rl.Color.white); //toremove
+        game.draw();
         rl.endTextureMode();
 
         // draw onto upscaled screen

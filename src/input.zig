@@ -33,14 +33,14 @@ pub const InputHandler = struct {
     startTapped: bool = false,
     selectTapped: bool = false,
 
-    pub fn handleInput(self: @This()) void {
+    pub fn handleInput(self: *@This()) void {
         self.resetTappedKeys();
         self.handlePresses();
         self.handleReleases();
     }
 
     // TODO: Make key bindings dynamic
-    fn handlePresses(self: @This()) void {
+    fn handlePresses(self: *@This()) void {
         if (rl.isKeyPressed(rl.KeyboardKey.left)) {
             self.leftPressed = true;
             self.leftTapped = true;
@@ -72,7 +72,7 @@ pub const InputHandler = struct {
         }
     }
 
-    fn handleReleases(self: @This()) void {
+    fn handleReleases(self: *@This()) void {
         if (rl.isKeyReleased(rl.KeyboardKey.left)) {
             self.leftPressed = false;
         }
@@ -98,7 +98,7 @@ pub const InputHandler = struct {
         }
     }
 
-    fn resetTappedKeys(self: @This()) void {
+    fn resetTappedKeys(self: *@This()) void {
         self.leftTapped = false;
         self.rightTapped = false;
         self.upTapped = false;
