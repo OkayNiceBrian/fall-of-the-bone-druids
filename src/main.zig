@@ -31,10 +31,6 @@ pub fn main(init: std.process.Init) !void {
 
     rl.setTargetFPS(gameConfig.fps);
 
-    // set up background, testing
-    const bgTexture = try rl.loadTexture("assets/bg.png");
-    defer rl.unloadTexture(bgTexture);
-
     // SETUP the virtual rendering situation
     const renderTexture: rl.RenderTexture2D = try rl.loadRenderTexture(gameConfig.v_screenSize.w, gameConfig.v_screenSize.h);
     const renderTextureSrc: rl.Rectangle = rl.Rectangle{.x = 0, .y = 0, .width = gameConfig.v_screenSize.w, .height = -gameConfig.v_screenSize.h};
@@ -60,10 +56,9 @@ pub fn main(init: std.process.Init) !void {
         game.update();
 
         //DRAW
-        // draw onto virtual screen to be uprendered
+        // draw onto virtual screen to be upscaled
         rl.beginTextureMode(renderTexture);
         rl.clearBackground(rl.Color.black);
-        rl.drawTexture(bgTexture, 0, 0, rl.Color.white); //toremove
         game.draw();
         rl.endTextureMode();
 
