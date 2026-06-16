@@ -46,9 +46,9 @@ pub fn main(init: std.process.Init) !void {
     defer rl.unloadTexture(playerTexture);
 
     // SETUP top-level objects
-    const timer = Timer{};
+    const globalTimer = Timer{};
     const ih = InputHandler{};
-    const game = Game{.inputHandler = &ih, .timer = &timer};
+    const game = Game{.inputHandler = &ih};
 
     // LOOP
     while (!rl.windowShouldClose()) {
@@ -75,6 +75,6 @@ pub fn main(init: std.process.Init) !void {
         rl.endDrawing();
 
         // TIMER INCREMENT
-        timer.increment();
+        globalTimer.increment();
     }
 }

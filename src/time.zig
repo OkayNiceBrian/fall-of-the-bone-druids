@@ -5,4 +5,8 @@ pub const Timer = struct {
     pub fn increment(self: @This()) void {
         self.frameCount += 1;
     }
+
+    pub fn reset(self: @This()) void {
+        self.frameCount = 0;
+    }
 };
